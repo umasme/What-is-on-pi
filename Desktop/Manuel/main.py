@@ -6,6 +6,12 @@ import LightSabers
 from sshkeyboard import listen_keyboard
 from pysabertooth import Sabertooth
 
+
+## Speed Controlls
+lin_speed:int  = 30
+turn_speed:int = 50
+dig_speed:int  = 100
+
 ## dictionary that holds our telemtry
 telemetry_data = {}
 LA = linearactuator.linearactuator()
@@ -27,10 +33,9 @@ def release(key):
     # telemetry_data = cancancan.read_can(telemetry_data)
 # Key press function
 def press(key):
-    lin_speed:int  = 30
-    turn_speed:int = 50
-    dig_speed:int  = 100
+    global lin_speed,turn_speed,dig_speed
 
+    
     print(f"\rYou pressed {key}!",end = "")
     
     
@@ -43,15 +48,42 @@ def press(key):
         Derive.turn_motion(-turn_speed)
     elif key == 'd':
     	Derive.turn_motion(turn_speed)
-    elif key == "e":
+    
+    if key == "e":
         LA.move(+1)
     elif key == "q":
         LA.move(-1)
-    elif key == "space":
+        
+    if key == "space":
         Rego.dig(dig_speed)
-    elif key == "r":
+    if key == "r":
         Rego.deposition()
-    else: 
+
+    if key == "1":
+        lin_speed = 10
+    elif key == "2":
+        lin_speed = 20
+    elif key == "3":
+        lin_speed = 30
+    elif key == "4":
+        lin_speed = 40
+    elif key == "5":
+        lin_speed = 50
+    
+    if key == "6":
+        turn_speed = 10
+    elif key == "7":
+        turn_speed = 20
+    elif key == "8":
+        turn_speed = 30
+    elif key == "9":
+        turn_speed = 40
+    elif key == "0":
+        turn_speed = 50
+        
+        
+        
+    if key is not in ["w","a","s","d","e","q","space","r"]: 
         print("\rN3RD!                  ",end = "") 
 
 # -----------------------------------------------------------------------
