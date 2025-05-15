@@ -1,0 +1,15 @@
+
+
+The following were added to /boot/firmware/config.txt
+dtoverlay=distable-bt
+enable_uart=1
+uart_baud=9600
+dtoverlay=uart0-pi5
+
+The following was added to /boot/firmware/cmdline.txt
+console=ttyAMA10,9600
+
+Download of VNC server:
+Download image through website (Raspberry pi ARM64 version)
+sudo dpkg -i (file_name).deb
+enable at boot (systemctl enable vncserver-virtual.service)
