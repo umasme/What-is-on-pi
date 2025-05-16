@@ -16,6 +16,7 @@ dig_speed:int  = 100
 telemetry_data = {}
 LA = linearactuator.linearactuator()
 
+first_press = True
 
 # -----------------------------------------------------------------------
 # -----------------------------------------------------------------------
@@ -28,8 +29,8 @@ def release(key):
     print("\rPress a key!                    ",end = "")
     print("\rPress a key!                    ",end = "")
     LA.stop()
-    Rego.stop()
     Derive.stop()
+    Rego.stop_dump()
     # telemetry_data = cancancan.read_can(telemetry_data)
 # Key press function
 def press(key):
@@ -54,8 +55,15 @@ def press(key):
     elif key == "q":
         LA.move(-1)
         
-    if key == "space":
+    if key == "space" and first_press:
         Rego.dig(dig_speed)
+        first_press = False
+        debounce_time = time.time()
+        
+    elif key == "space" and not first_press and time.time() - debounce_time > 1:
+        Rego.stop_dig()
+        first_press = True
+
     if key == "r":
         Rego.deposition()
 
@@ -83,8 +91,8 @@ def press(key):
         
         
         
-    if key is not in ["w","a","s","d","e","q","space","r"]: 
-        print("\rN3RD!                  ",end = "") 
+    # if key is not in ["w","a","s","d","e","q","space","r"]: 
+        # print("\rN3RD!                  ",end = "") 
 
 # -----------------------------------------------------------------------
 # -----------------------------------------------------------------------
